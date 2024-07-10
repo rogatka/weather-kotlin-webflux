@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: cities_db
+      username: weather
+      password: weather
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: abcde
+      timeout: 60000
+
+security:
+  users[0]:
+    username: user
+    password: password
+    authorities: USER, CITIES_READ
+    disabled: false
+  users[1]:
+    username: some-service
+    password: password
+    authorities: CLIENT
+    disabled: false
+
+weather-api:
+  base-url: https://api.open-meteo.com
+  windSpeedUnit: ms
+
+logging:
+  pattern:
+    console: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] %clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+  level:
+    org.springframework: INFO
+    com.demo.weather: DEBUG
+    reactor.netty.http.client: DEBUG

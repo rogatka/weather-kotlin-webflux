@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT}
+      database: ${MONGODB_DB}
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+    redis:
+      database: ${REDIS_DB_INDEX}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      timeout: ${REDIS_TIMEOUT_MS}
+
+security:
+  users[0]:
+    username: ${USER_USERNAME}
+    password: ${USER_PASSWORD}
+    authorities: ${USER_AUTHORITIES}
+    disabled: ${USER_DISABLED}
+  users[1]:
+    username: ${SOME_SERVICE_USERNAME}
+    password: ${SOME_SERVICE_PASSWORD}
+    authorities: ${SOME_SERVICE_AUTHORITIES}
+    disabled: ${SOME_SERVICE_DISABLED}
+
+weather-api:
+  base-url: ${WEATHER_API_BASE_URL}
+  windSpeedUnit: ${WEATHER_API_WIND_SPEED_UNIT}
+
+logging:
+  pattern:
+    console: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] %clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+  level:
+    org.springframework: ${LOG_LEVEL_SPRING}
+    com.demo.weather: ${LOG_LEVEL_APP}
+    reactor.netty.http.client: ${LOG_LEVEL_NETTY}

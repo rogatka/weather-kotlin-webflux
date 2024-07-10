@@ -1,0 +1,34 @@
+version: '3'
+services:
+  cities-db:
+    image: mongo:8.0.0-rc11-jammy
+    container_name: cities-mongo-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: cities_db
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  redis:
+    image: bitnami/redis:7.2
+    environment:
+      - REDIS_PASSWORD=abcde
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/bitnami/redis/data
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=abcde
+    ports:
+      - "8081:8081"
+volumes:
+  cities_db:
+  redis_data:
